@@ -1,21 +1,28 @@
-// routes/userRoutes.js
 const express = require('express');
-const { getUserById, updateUserById, getAllRoles, createRole, updateRole, deleteRole, getUserInteractions } = require('../controllers/userController');
-const { protect, admin, auctionManager } = require('../middlewares/authMiddleware');
-
 const router = express.Router();
+const {
+    createUser,
+    updateUser,
+    deleteUser,
+    getAllUsers,
+    getUserById
+} = require('../controllers/userController');
 
-// User management routes
+const { protect, authorize } = require('../middlewares/authMiddleware');
+
+// Route to create a new user
+router.post('/create', protect, authorize('super_user', 'system_admin', 'seller', 'buyer'), createUser);
+
+// Route to update a user
+router.put('/update/:id', protect, authorize('super_user', 'system_admin', 'seller', 'buyer'), updateUser);
+
+// Route to delete a user
+router.delete('/delete/:id', protect, authorize('super_user', 'system_admin'), deleteUser);
+
+// Route to get all users (no authorization required)
+router.get('/', protect, getAllUsers);
+
+// Route to get a single user by ID (no authorization required)
 router.get('/:id', protect, getUserById);
-router.put('/:id', protect, updateUserById);
-
-// Role and permissions routes
-router.get('/roles', protect, admin, getAllRoles);
-router.post('/roles', protect, admin, createRole);
-router.put('/roles/:roleId', protect, admin, updateRole);
-router.delete('/roles/:roleId', protect, admin, deleteRole);
-
-// User interactions routes
-router.get('/:id/interactions', protect, getUserInteractions);
 
 module.exports = router;

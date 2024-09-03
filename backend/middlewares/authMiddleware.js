@@ -1,11 +1,13 @@
-// middlewares/authMiddleware.js
 const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
 
-exports.protect = (req, res, next) => {
+// Middleware to protect routes and ensure the user is authenticated
+exports.protect = async (req, res, next) => {
     let token;
-
-    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+    if (
+        req.headers.authorization &&
+        req.headers.authorization.startsWith('Bearer')
+    ) {
         token = req.headers.authorization.split(' ')[1];
     }
 
@@ -15,25 +17,19 @@ exports.protect = (req, res, next) => {
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = decoded;
+        req.user = await User.findById(decoded.id);
         next();
     } catch (error) {
-        res.status(401).json({ message: 'Not authorized, token failed' });
+        return res.status(401).json({ message: 'Not authorized, token failed' });
     }
 };
 
-exports.admin = (req, res, next) => {
-    if (req.user && req.user.role === 'admin') {
+// Middleware to check if the user has the appropriate role to access the route
+exports.authorize = (...roles) => {
+    return (req, res, next) => {
+        if (!roles.includes(req.user.role)) {
+            return res.status(403).json({ message: 'User not authorized' });
+        }
         next();
-    } else {
-        res.status(403).json({ message: 'Not authorized as an admin' });
-    }
-};
-
-exports.auctionManager = (req, res, next) => {
-    if (req.user && (req.user.role === 'auctionManager' || req.user.role === 'admin')) {
-        next();
-    } else {
-        res.status(403).json({ message: 'Not authorized as an auction manager' });
-    }
+    };
 };
