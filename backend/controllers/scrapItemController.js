@@ -1,4 +1,4 @@
-const Scrap = require('../models/scrapModel');
+const Scrap = require('../models/scrapItemModel');
 
 // @desc Create a new scrap item
 // @route POST /api/scrap

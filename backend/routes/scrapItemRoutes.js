@@ -14,8 +14,8 @@ const {
     getScrapItemsWithPagination,
     getScrapItemCountByStatus,
     getScrapItemsWithSorting
-} = require('../controllers/scrapController');
-const { protect, authorize } = require('../middleware/authMiddleware');
+} = require('../controllers/scrapItemController');
+const { protect, authorize } = require('../middlewares/authMiddleware');
 
 // @desc Create a new scrap item
 // @route POST /api/scrap

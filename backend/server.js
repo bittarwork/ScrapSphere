@@ -3,7 +3,8 @@ const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
-const loogermidelware = require("./middlewares/looger");
+const scrapRoutes = require('./routes/scrapItemRoutes');
+const loogermidelware = require('./middlewares/looger');
 
 // Load environment variables
 dotenv.config();
@@ -28,11 +29,12 @@ connectDB();
 
 // Middleware
 app.use(express.json());
-app.use(loogermidelware);
+app.use(loogermidelware); // Logging middleware
 
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/scrap', scrapRoutes); // Add the scrap routes
 
 app.get('/', (req, res) => {
     res.send('API is running...');
