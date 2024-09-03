@@ -1,0 +1,67 @@
+# Ignore node_modules directory
+node_modules/
+
+# Ignore build output
+build/
+dist/
+
+# Ignore environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Ignore logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ignore runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Ignore coverage files
+coverage/
+*.lcov
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore editor directories and files
+.idea/
+.vscode/
+*.swp
+*~
+.project
+.classpath
+.c9/
+*.sublime-project
+*.sublime-workspace
+*.code-workspace
+
+# Ignore temporary files
+tmp/
+temp/
+
+# Ignore npm lock file
+package-lock.json
+yarn.lock
+
+# Ignore build artifacts
+*.out
+*.map
+
+# Ignore compiled source
+lib/
+*.compiled
+
+# Ignore miscellaneous
+*.bak
+*.orig
+*.rej
