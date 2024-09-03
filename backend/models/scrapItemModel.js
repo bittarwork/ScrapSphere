@@ -96,6 +96,10 @@ const scrapItemSchema = new Schema({
         set: function (val) {
             return val || Date.now; // Ensures the updated_at field is set to the current date if not provided
         }
+    },
+    images: {
+        type: [String], // Array of image URLs
+        default: [] // Default to an empty array
     }
 });
 
