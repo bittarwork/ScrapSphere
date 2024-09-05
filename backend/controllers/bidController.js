@@ -1,6 +1,6 @@
-const Bid = require('../models/Bid');
-const Auction = require('../models/Auction');
-const User = require('../models/User');
+const Bid = require('../models/bidModel');
+const Auction = require('../models/auctionModel');
+const User = require('../models/userModel');
 
 // 1. Create a new bid
 exports.createBid = async (req, res) => {

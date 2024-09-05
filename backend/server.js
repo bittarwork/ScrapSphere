@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const scrapRoutes = require('./routes/scrapItemRoutes');
+const bidRoutes = require('./routes/bidRoutes'); // Import Bid routes
 const loogermidelware = require('./middlewares/looger');
 
 // Load environment variables
@@ -34,13 +35,14 @@ app.use(loogermidelware); // Logging middleware
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
-app.use('/api/scrap', scrapRoutes); // Add the scrap routes
+app.use('/api/scrap', scrapRoutes); // Scrap routes
+app.use('/api/bids', bidRoutes); // Add Bid routes
 
 app.get('/', (req, res) => {
     res.send('API is running...');
 });
 
-// Error Handling Middleware (optional, for better error responses)
+// Error Handling Middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).json({ message: 'Something went wrong', error: err.message });
