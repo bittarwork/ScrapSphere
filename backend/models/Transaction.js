@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const paymentSchema = new Schema({
-    payment_id: {
+const transactionSchema = new Schema({
+    transaction_id: {
         type: String,
-        required: [true, 'Payment ID is required'],
+        required: [true, 'Transaction ID is required'],
         unique: true
     },
     amount: {
@@ -16,25 +16,30 @@ const paymentSchema = new Schema({
         type: Date,
         default: Date.now
     },
-    method: {
+    payment_method: {
         type: String,
         enum: ['credit_card', 'bank_transfer', 'paypal', 'other'],
         required: [true, 'Payment method is required']
     },
     status: {
         type: String,
-        enum: ['completed', 'pending', 'failed'],
+        enum: ['completed', 'pending', 'failed', 'refunded'],
         default: 'pending'
+    },
+    payment: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Payment',
+        required: [true, 'Payment reference is required']
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: [true, 'User reference is required']
     },
-    transaction: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Transaction'
-    }],
+    description: {
+        type: String,
+        default: null
+    },
     created_at: {
         type: Date,
         default: Date.now
@@ -48,6 +53,6 @@ const paymentSchema = new Schema({
     }
 });
 
-const Payment = mongoose.model('Payment', paymentSchema);
+const Transaction = mongoose.model('Transaction', transactionSchema);
 
-module.exports = Payment;
+module.exports = Transaction;
