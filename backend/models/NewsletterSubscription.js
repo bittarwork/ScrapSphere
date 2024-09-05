@@ -30,7 +30,6 @@ const subscriptionSchema = new Schema({
     }
 });
 
-// Create the Mongoose model for newsletter subscriptions
 const NewsletterSubscription = mongoose.model('NewsletterSubscription', subscriptionSchema);
 
 module.exports = NewsletterSubscription;
