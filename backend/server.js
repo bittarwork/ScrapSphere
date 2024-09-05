@@ -4,8 +4,10 @@ const mongoose = require('mongoose');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const scrapRoutes = require('./routes/scrapItemRoutes');
-const bidRoutes = require('./routes/bidRoutes'); // Import Bid routes
-const loogermidelware = require('./middlewares/looger');
+const bidRoutes = require('./routes/bidRoutes');
+const auctionRoutes = require('./routes/auctionRoutes');
+
+const loogeridelware = require('./middlewares/looger');
 
 // Load environment variables
 dotenv.config();
@@ -30,7 +32,7 @@ connectDB();
 
 // Middleware
 app.use(express.json());
-app.use(loogermidelware); // Logging middleware
+app.use(loogeridelware);
 
 // Routes
 app.use('/api/auth', authRoutes);
