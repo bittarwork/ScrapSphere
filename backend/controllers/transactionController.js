@@ -1,6 +1,6 @@
 const { validationResult } = require('express-validator');
 const Transaction = require('../models/Transaction');
-const Payment = require('../models/Payment');
+const Payment = require('../models/paymentModel');
 
 // Create a new transaction
 exports.createTransaction = async (req, res) => {

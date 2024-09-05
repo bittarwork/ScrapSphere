@@ -1,5 +1,5 @@
 const { validationResult } = require('express-validator');
-const Payment = require('../models/Payment');
+const Payment = require('../models/paymentModel');
 const Transaction = require('../models/Transaction');
 
 // Create a new payment
