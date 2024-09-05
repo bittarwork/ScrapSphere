@@ -48,6 +48,7 @@ const bidRoutes = require('./routes/bidRoutes');
 const auctionRoutes = require('./routes/auctionRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 const transactiontRoutes = require('./routes/Transactions');
+const notificationRoutes = require('./routes/notificationRoutes');
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
@@ -56,6 +57,7 @@ app.use('/api/bids', bidRoutes);
 app.use('/api/auction', auctionRoutes);
 app.use('/api/paymen', paymentRoutes);
 app.use('/api/transac', transactiontRoutes);
+app.use('/api/notifications', notificationRoutes);
 /* -------------------------------------------------------------------------- */
 /*                                simple Route                                */
 /* -------------------------------------------------------------------------- */

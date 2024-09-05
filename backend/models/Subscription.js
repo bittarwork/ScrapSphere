@@ -7,29 +7,24 @@ const subscriptionSchema = new Schema({
         ref: 'User',
         required: true
     },
-    subscriptionType: {
+    frequency: {
         type: String,
         enum: ['daily', 'weekly', 'monthly'],
         required: true
     },
-    notificationType: {
+    categories: {
         type: [String],
-        enum: ['new_auctions', 'auction_updates', 'offers', 'other'],
+        enum: ['auctions', 'bids', 'system_updates'],
         default: []
     },
     created_at: {
         type: Date,
         default: Date.now
-    },
-    updated_at: {
-        type: Date,
-        default: Date.now,
-        set: function (val) {
-            return val || Date.now;
-        }
     }
+}, {
+    timestamps: true // Automatically manage created_at and updated_at fields
 });
 
-const NewsletterSubscription = mongoose.model('NewsletterSubscription', subscriptionSchema);
+const Subscription = mongoose.model('Subscription', subscriptionSchema);
 
-module.exports = NewsletterSubscription;
+module.exports = Subscription;
