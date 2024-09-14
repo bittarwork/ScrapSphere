@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
+const cors = require('cors');  // تم إضافة CORS
 const { swaggerUi, specs } = require('./doc/swagger');
 
 dotenv.config();
@@ -24,9 +25,13 @@ connectDB();
 /* -------------------------------------------------------------------------- */
 /*                                 middleware                                 */
 /* -------------------------------------------------------------------------- */
-const loogeridelware = require('./middlewares/looger');
+const loogerMiddleware = require('./middlewares/looger');
 app.use(express.json());
-app.use(loogeridelware);
+app.use(loogerMiddleware);
+app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true
+}));
 
 /* -------------------------------------------------------------------------- */
 /*                                   Swagger                                  */
@@ -45,6 +50,7 @@ const paymentRoutes = require('./routes/paymentRoutes');
 const transactiontRoutes = require('./routes/Transactions');
 const notificationRoutes = require('./routes/notificationRoutes');
 
+// إضافة المسارات الخاصة بـ API
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/scrap', scrapRoutes);
