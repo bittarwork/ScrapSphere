@@ -1,24 +1,18 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
+const { swaggerUi, specs } = require('./doc/swagger');
 
-
-// Load environment variables
 dotenv.config();
 
 const app = express();
 
-
 /* -------------------------------------------------------------------------- */
 /*                                  DataBase                                  */
 /* -------------------------------------------------------------------------- */
-// Connect to MongoDB
 const connectDB = async () => {
     try {
-        await mongoose.connect(process.env.MONGO_URI, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
+        await mongoose.connect(process.env.MONGO_URI, {});
         console.log('MongoDB connected...');
     } catch (error) {
         console.error('Error connecting to MongoDB:', error.message);
@@ -27,20 +21,21 @@ const connectDB = async () => {
 };
 connectDB();
 
-
 /* -------------------------------------------------------------------------- */
-/*                                 middelware                                 */
+/*                                 middleware                                 */
 /* -------------------------------------------------------------------------- */
-// impoting middleware: 
 const loogeridelware = require('./middlewares/looger');
-// Middleware
 app.use(express.json());
 app.use(loogeridelware);
 
 /* -------------------------------------------------------------------------- */
+/*                                   Swagger                                  */
+/* -------------------------------------------------------------------------- */
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+
+/* -------------------------------------------------------------------------- */
 /*                                   routes                                   */
 /* -------------------------------------------------------------------------- */
-// import routs : 
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const scrapRoutes = require('./routes/scrapItemRoutes');
@@ -49,7 +44,7 @@ const auctionRoutes = require('./routes/auctionRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 const transactiontRoutes = require('./routes/Transactions');
 const notificationRoutes = require('./routes/notificationRoutes');
-// Routes
+
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/scrap', scrapRoutes);
@@ -58,6 +53,7 @@ app.use('/api/auction', auctionRoutes);
 app.use('/api/paymen', paymentRoutes);
 app.use('/api/transac', transactiontRoutes);
 app.use('/api/notifications', notificationRoutes);
+
 /* -------------------------------------------------------------------------- */
 /*                                simple Route                                */
 /* -------------------------------------------------------------------------- */
